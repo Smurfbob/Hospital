@@ -1,31 +1,31 @@
-CREATE TABLE IF NOT EXISTS Ort (
-	PLZ int NOT NULL PRIMARY KEY,
-	Name varchar(255) NOT NULL,
-	Region varchar(255) NOT NULL
+CREATE TABLE IF NOT EXISTS ort (
+	plz int NOT NULL PRIMARY KEY,
+	name varchar(255) NOT NULL,
+	region varchar(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS  Krankenhaus (
-	KrankenhausID int NOT NULL PRIMARY KEY,
-	Name varchar(255) NOT NULL,
-	Strasse varchar(255) NOT NULL,
-	Ansprechpartner varchar(255) NULL,
-	PLZ FOREIGN KEY REFERENCES Ort(PLZ)
+CREATE TABLE IF NOT EXISTS krankenhaus (
+	krankenhaus_id int NOT NULL PRIMARY KEY,
+	name varchar(255) NOT NULL,
+	strasse varchar(255) NOT NULL,
+	ansprechpartner varchar(255) NULL,
+	plz int FOREIGN KEY REFERENCES ort(plz)
 );
 
-CREATE TABLE IF NOT EXISTS  Fachrichtung (
-	FachrichtungsID int NOT NULL PRIMARY KEY,
-	Name varchar(255) NOT NULL
+CREATE TABLE IF NOT EXISTS fachrichtung (
+	fachrichtungs_id int NOT NULL PRIMARY KEY,
+	name varchar(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Station (
-	StationsID int NOT NULL PRIMARY KEY,
-	Name varchar(255) NOT NULL,
-	AnzahlFreieBetten int NOT NULL,
-	AnzahlBelegteBetten int NOT NULL,
-	KrankenhausID FOREIGN KEY REFERENCES Krankenhaus(KrankenhausID)
+CREATE TABLE IF NOT EXISTS station (
+	stations_id int NOT NULL PRIMARY KEY,
+	name varchar(255) NOT NULL,
+	anzahlFreieBetten int NOT NULL,
+	anzahlBelegteBetten int NOT NULL,
+	krankenhaus_id int FOREIGN KEY REFERENCES krankenhaus(krankenhaus_id)
 );
 
-CREATE TABLE IF NOT EXISTS  FachrichtungStation (
-	FachrichtungsID FOREIGN KEY REFERENCES Fachrichtung(FachrichtungsID),
-	StationsID FOREIGN KEY REFERENCES Station(StationsID),
+CREATE TABLE IF NOT EXISTS fachrichtungStation (
+	fachrichtungs_id int FOREIGN KEY REFERENCES fachrichtung(fachrichtungs_id),
+	stations_id int FOREIGN KEY REFERENCES station(stations_id),
 );
