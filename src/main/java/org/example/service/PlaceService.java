@@ -21,24 +21,15 @@ public class PlaceService implements DataAccess<Place> {
 
     @Override
     public List<Place> getAll () {
-        final List<Place> places = new ArrayList<>();
-        try {
-            final Statement statement = this.connection.createStatement();
-            statement.execute(String.format("SELECT * FROM %s;", TABLE_NAME));
-            final ResultSet set = statement.getResultSet();
-
-//            private long PLZ;
-//            private String name;
-//            private String region;
-            while (set.next()) {
+        return DatabaseUtils.fetchAllElements(TABLE_NAME, connection, set -> {
+            try {
                 final String name = set.getString("name");
                 final String region = set.getString("region");
                 final long plz = set.getLong("plz");
-                places.add(new Place(plz, name, region ));
+                return new Place(plz, name, region );
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return places;
+        });
     }
 }
