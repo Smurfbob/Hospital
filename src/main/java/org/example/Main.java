@@ -5,7 +5,7 @@ import java.sql.*;
 public class Main {
     public static void main (String[] args) {
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://127.0.0.1:5432/hospital", "postgres", System.getenv("password"))) {
+                String.format("jdbc:postgresql://127.0.0.1:%s/hospital", System.getenv("port")), "postgres", System.getenv("password"))) {
 
             if (conn != null) {
                 System.out.println("Connected to the database!");
