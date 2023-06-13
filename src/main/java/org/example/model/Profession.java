@@ -9,6 +9,14 @@ public class Profession {
 
     }
 
+    @Override
+    public String toString() {
+        return "Profession{" +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public Profession(int ID, String name) {
         this.ID = ID;
         this.name = name;

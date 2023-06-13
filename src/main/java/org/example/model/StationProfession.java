@@ -9,6 +9,14 @@ public class StationProfession {
 
     }
 
+    @Override
+    public String toString() {
+        return "StationProfession{" +
+                "professionID=" + professionID +
+                ", stationID=" + stationID +
+                '}';
+    }
+
     public StationProfession(int professionID, int stationID) {
         this.professionID = professionID;
         this.stationID = stationID;

@@ -11,6 +11,16 @@ public class Station {
 
     }
 
+    @Override
+    public String toString() {
+        return "Station{" +
+                "stationID=" + stationID +
+                ", availableBeds=" + availableBeds +
+                ", unavailableBeds=" + unavailableBeds +
+                ", kkhID=" + kkhID +
+                '}';
+    }
+
     public Station(int stationID, int availableBeds, int unavailableBeds, int kkhID) {
         this.stationID = stationID;
         this.availableBeds = availableBeds;

@@ -20,6 +20,18 @@ public class Hospital {
         this.plz = plz;
     }
 
+
+    @Override
+    public String toString() {
+        return "Hospital{" +
+                "kkhID=" + kkhID +
+                ", name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", contact='" + contact + '\'' +
+                ", plz='" + plz + '\'' +
+                '}';
+    }
+
     public long getKkhID() {
         return kkhID;
     }
