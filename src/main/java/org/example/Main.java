@@ -1,21 +1,15 @@
 package org.example;
 
-import org.example.service.HospitalService;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main (String[] args) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:" + System.getenv("port") + "/hospital", "postgres", System.getenv("password"))) {
 
-            new HospitalService(conn);
             if (conn != null) {
                 System.out.println("Connected to the database!");
                 SqlService sqlservice = new SqlService(conn);
@@ -34,6 +28,8 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+
 
 
 
