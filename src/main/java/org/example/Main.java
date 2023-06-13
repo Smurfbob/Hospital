@@ -1,15 +1,19 @@
 package org.example;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.sql.*;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main (String[] args) {
         try (Connection conn = DriverManager.getConnection(
-                String.format("jdbc:postgresql://127.0.0.1:%s/hospital", System.getenv("port")), "postgres", System.getenv("password"))) {
+                "jdbc:postgresql://127.0.0.1:" + System.getenv("port") + "/hospital", "postgres", System.getenv("password"))) {
 
             if (conn != null) {
                 System.out.println("Connected to the database!");
-                printOrtTable(conn);
+                createTables(conn);
             } else {
                 System.out.println("Failed to make connection!");
             }
@@ -20,6 +24,21 @@ public class Main {
             e.printStackTrace();
         }
 
+    }
+
+    private static void createTables(Connection connection) {
+        var creationSqlScript = readStringFrom("createTablesHospitalDb.sql");
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(creationSqlScript)) {
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private static String readStringFrom(final String name) {
+        return new BufferedReader(new InputStreamReader(Objects.requireNonNull(Thread.currentThread()
+                .getContextClassLoader().getResourceAsStream(name)))).lines().collect(Collectors.joining("\n"));
     }
 
     private static void printOrtTable(Connection conn) {
