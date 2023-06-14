@@ -41,7 +41,7 @@ public class SqlService {
         }
 
         insertTestData("ort", "plz, name, region", formattedDataForSql);
-    }:wq
+    }
 
     public static void generateDataStringForTableKrankenhaus(List<Hospital> hospitalList) {
         String formattedDataForSql = "";
