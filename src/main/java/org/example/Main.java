@@ -1,10 +1,7 @@
 package org.example;
 
-import org.example.generator.FachrichtungGenerator;
-import org.example.generator.KrankenhausGenerator;
-import org.example.model.Fachrichtung;
-import org.example.model.Krankenhaus;
-import org.example.model.Ort;
+import org.example.generator.*;
+import org.example.model.*;
 import org.example.service.HospitalService;
 
 import java.sql.*;
@@ -21,11 +18,22 @@ public class Main {
                 System.out.println("Connected to the database!");
                 SqlService sqlservice = new SqlService(conn);
 
-//                List<Krankenhaus> hospitalList = KrankenhausGenerator.generateKrankenhausList(1000);
-//                SqlService.generateDataStringForTableKrankenhaus(hospitalList);
+                List<Ort> locationList = OrtGenerator.generateData(500);
+                List<Fachrichtung> professionList = FachrichtungGenerator.getAmountOfRandomFachrichtung(30);
 
-                List<Fachrichtung> professionList = FachrichtungGenerator.getAmountOfRandomFachrichtung(10);
+                SqlService.generateDataStringForTableOrt(locationList);
                 SqlService.generateDataStringForTableFachrichtung(professionList);
+
+                List<Krankenhaus> hospitalList = KrankenhausGenerator.generateKrankenhausList(100);
+                SqlService.generateDataStringForTableKrankenhaus(hospitalList);
+
+                List<Station> stationList = StationGenerator.getAmountOfRandomStationFachrichtung(hospitalList, 12);
+                SqlService.generateDataStringForTableStation(stationList);
+
+                List<FachrichtungsStation> fachrichtungsStationList = FachrichtungStationGenerator.getAmountOfRandomStationFachrichtung(
+                        professionList, stationList);
+                SqlService.generateDataStringForTableFachrichtungStation(fachrichtungsStationList);
+
             } else {
                 System.out.println("Failed to make connection!");
             }

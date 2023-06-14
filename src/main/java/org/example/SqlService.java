@@ -28,13 +28,13 @@ public class SqlService {
         }
     }
 
-    public static void generateDataStringForTableOrt(List<Ort> placeList) {
+    public static void generateDataStringForTableOrt(List<Ort> locationList) {
         String formattedDataForSql = "";
 
-        for (int i = 0; i < placeList.size(); i++) {
+        for (int i = 0; i < locationList.size(); i++) {
             formattedDataForSql += String.format("(%d, \"%s\", \"%s\")",
-                    placeList.get(i).getPlz(), placeList.get(i).getName(), placeList.get(i).getRegion());
-            if (i < placeList.size()-1) {
+                    locationList.get(i).getPlz(), locationList.get(i).getName(), locationList.get(i).getRegion());
+            if (i < locationList.size()-1) {
                 formattedDataForSql += ", ";
             }
         }
