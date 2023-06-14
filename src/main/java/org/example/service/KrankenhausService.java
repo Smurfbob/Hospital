@@ -1,7 +1,6 @@
 package org.example.service;
 
 import org.example.model.Krankenhaus;
-import org.example.template.DataAccess;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
