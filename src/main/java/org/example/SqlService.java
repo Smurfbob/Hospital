@@ -1,7 +1,6 @@
 package org.example;
 
-import org.example.model.Hospital;
-import org.example.model.Place;
+import org.example.model.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,12 +28,12 @@ public class SqlService {
         }
     }
 
-    public static void generateDataStringForTableOrt(List<Place> placeList) {
+    public static void generateDataStringForTableOrt(List<Ort> placeList) {
         String formattedDataForSql = "";
 
         for (int i = 0; i < placeList.size(); i++) {
             formattedDataForSql += String.format("(%d, \'%s', \'%s')",
-                    placeList.get(i).getPLZ(), placeList.get(i).getName(), placeList.get(i).getRegion());
+                    placeList.get(i).getPlz(), placeList.get(i).getName(), placeList.get(i).getRegion());
             if (i < placeList.size()-1) {
                 formattedDataForSql += ", ";
             }
@@ -43,20 +42,63 @@ public class SqlService {
         insertTestData("ort", "plz, name, region", formattedDataForSql);
     }
 
-    public static void generateDataStringForTableKrankenhaus(List<Hospital> hospitalList) {
+    public static void generateDataStringForTableKrankenhaus(List<Krankenhaus> hospitalList) {
         String formattedDataForSql = "";
 
-//        hospitalList.get(1).get
-//
-//        for (int i = 0; i < hospitalList.size(); i++) {
-//            formattedDataForSql += String.format("(%d, \'%s', \'%s')",
-//                    hospitalList.get(i).getkkhID(), placeList.get(i).getName(), placeList.get(i).getRegion());
-//            if (i < placeList.size()-1) {
-//                formattedDataForSql += ", ";
-//            }
-//        }
+        for (int i = 0; i < hospitalList.size(); i++) {
+            formattedDataForSql += String.format("(%d, \'%s', \'%s')",
+                    hospitalList.get(i).getKrankehausId(), hospitalList.get(i).getName(), hospitalList.get(i).getStrasse(),
+                    hospitalList.get(i).getAnsprechpartner(), hospitalList.get(i).getPlz());
+            if (i < hospitalList.size()-1) {
+                formattedDataForSql += ", ";
+            }
+        }
 
-        insertTestData("ort", "plz, name, region", formattedDataForSql);
+        insertTestData("hospital", "krankenhaus_id, name, strasse, ansprechpartner, plz", formattedDataForSql);
+    }
+
+    public static void generateDataStringForTableFachrichtung(List<Fachrichtung> professionList) {
+        String formattedDataForSql = "";
+
+        for (int i = 0; i < professionList.size(); i++) {
+            formattedDataForSql += String.format("(%d, \'%s', \'%s')",
+                    professionList.get(i).getFachrichtungs_id(), professionList.get(i).getName());
+            if (i < professionList.size()-1) {
+                formattedDataForSql += ", ";
+            }
+        }
+
+        insertTestData("fachrichtung", "fachrichtungs_id, name", formattedDataForSql);
+    }
+
+    public static void generateDataStringForTableStation(List<Station> stationList) {
+        String formattedDataForSql = "";
+
+        for (int i = 0; i < stationList.size(); i++) {
+            formattedDataForSql += String.format("(%d, \'%s', \'%s')",
+                    stationList.get(i).getStationId(), stationList.get(i).getName(), stationList.get(i).getAnzahlFreieBetten(),
+                    stationList.get(i).getAnzahlBelegteBetten(), stationList.get(i).getKrankenhausId());
+            if (i < stationList.size()-1) {
+                formattedDataForSql += ", ";
+            }
+        }
+
+        insertTestData("station", "stations_id, name, anzahlFreieBetten, anzahlBelegteBetten, krankenhaus_id",
+                formattedDataForSql);
+    }
+
+    public static void generateDataStringForTableFachrichtungStation(List<FachrichtungsStation> fachrichtungsStationList) {
+        String formattedDataForSql = "";
+
+        for (int i = 0; i < fachrichtungsStationList.size(); i++) {
+            formattedDataForSql += String.format("(%d, \'%s', \'%s')",
+                    fachrichtungsStationList.get(i).getFachrichtungsId(), fachrichtungsStationList.get(i).getStationsId());
+            if (i < fachrichtungsStationList.size()-1) {
+                formattedDataForSql += ", ";
+            }
+        }
+
+        insertTestData("fachrichtungStation", "fachrichtungs_id, stations_id", formattedDataForSql);
     }
 
     private static void insertTestData(String tablename, String columns, String values) {

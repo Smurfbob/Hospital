@@ -23,10 +23,11 @@ public class StationService implements DataAccess<Station> {
 
             try {
                 final int stationID = resultSet.getInt("stations_id");
+                final String name = resultSet.getString("name");
                 final int availableBeds = resultSet.getInt("anzahlFreieBetten");
                 final int unavailableBeds = resultSet.getInt("anzahlBelegteBetten");
                 final int kkhID = resultSet.getInt("krankenhaus_id");
-                return new Station(stationID, availableBeds, unavailableBeds, kkhID);
+                return new Station(stationID, name, availableBeds, unavailableBeds, kkhID);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
