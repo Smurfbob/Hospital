@@ -1,12 +1,15 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import org.example.model.Hospital;
+import org.example.model.Place;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,20 +29,47 @@ public class SqlService {
         }
     }
 
-    public static void mergeTestData(String tablename, List<String> tableColumns, List<Object> dataList) {
-        String sqlInsertionScript = readStringFrom("mergeTestDataIntoTable.sql");
+    public static void generateDataStringForTableOrt(List<Place> placeList) {
+        String formattedDataForSql = "";
 
-        List<String> formattedDataForSql = new ArrayList<String>();
-
-        for (int i = 0; i < dataList.size(); i++) {
-            formattedDataForSql.add(dataList.get(i).toString());
+        for (int i = 0; i < placeList.size(); i++) {
+            formattedDataForSql += String.format("(%d, \'%s', \'%s')",
+                    placeList.get(i).getPLZ(), placeList.get(i).getName(), placeList.get(i).getRegion());
+            if (i < placeList.size()-1) {
+                formattedDataForSql += ", ";
+            }
         }
 
-        System.out.println(formattedDataForSql);
+        insertTestData("ort", "plz, name, region", formattedDataForSql);
+    }:wq
 
-        String sqlQuery = String.format(sqlInsertionScript,
-                //ab hier folgen die Variablen für die SQL-Query.
-                tablename);
+    public static void generateDataStringForTableKrankenhaus(List<Hospital> hospitalList) {
+        String formattedDataForSql = "";
+
+//        hospitalList.get(1).get
+//
+//        for (int i = 0; i < hospitalList.size(); i++) {
+//            formattedDataForSql += String.format("(%d, \'%s', \'%s')",
+//                    hospitalList.get(i).getkkhID(), placeList.get(i).getName(), placeList.get(i).getRegion());
+//            if (i < placeList.size()-1) {
+//                formattedDataForSql += ", ";
+//            }
+//        }
+
+        insertTestData("ort", "plz, name, region", formattedDataForSql);
+    }
+
+    private static void insertTestData(String tablename, String columns, String values) {
+        String sqlQuery = String.format("INSERT INTO %s (%s)%n VALUES %s%n;",
+                //Variablen für SQL-Query
+                tablename, columns, values);
+
+        try (Statement statement = _connection.createStatement();
+             ResultSet rs = statement.executeQuery(sqlQuery);) {
+
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
     }
 
     private static String readStringFrom(final String name) {
