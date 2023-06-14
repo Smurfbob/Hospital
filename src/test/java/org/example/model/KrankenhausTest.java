@@ -3,8 +3,10 @@ package org.example.model;
 import org.example.service.ServiceProvider;
 import org.junit.Test;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class KrankenhausTest {
 
@@ -14,39 +16,63 @@ public class KrankenhausTest {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy:MM:DD-hh:mm:ss");
 
     private void request(final int amount, final String name) {
-        final LocalDateTime now = LocalDateTime.now();
+
+        final LocalDateTime start = LocalDateTime.now();
+
         for(int i=0 ; i < amount ; i++) {
             ServiceProvider.HOSPITAL_SERVICE.getAll();
         }
         final LocalDateTime endTime = LocalDateTime.now();
 
-        final String response = String.format("%s %s %s --- %s Time: ", name ,KrankenhausTest.class.getSimpleName(),
-                now.format(FORMATTER),
-                endTime.format(FORMATTER) );
+        final Duration duration = Duration.between(start, endTime);
+
+        final String response = String.format("%s * %d %s %s --- %s Time: %d", name, DEFAULT_INTERVAL ,KrankenhausTest.class.getSimpleName(),
+                start.format(FORMATTER),
+                endTime.format(FORMATTER),
+                duration.getSeconds());
         System.out.println(response);
     }
 
-
-
-
     @Test
     public void test0() {
-        request(DEFAULT_INTERVAL * 1, "Test 1");
+        final int amount = 1;
+        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
     }
 
     @Test
     public void test1() {
-        request(DEFAULT_INTERVAL * 5, "Test 5");
+        final int amount = 5;
+        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
     }
 
     @Test
     public void test2() {
-        request( DEFAULT_INTERVAL * 10, "Test 10");
+        final int amount = 10;
+        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
     }
 
     @Test
     public void test3() {
-        request( DEFAULT_INTERVAL * 20, "Test 20");
+        final int amount = 20;
+        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+    }
+
+    @Test
+    public void test4() {
+        final int amount = 40;
+        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+    }
+
+    @Test
+    public void test5() {
+        final int amount = 80;
+        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+    }
+
+    @Test
+    public void test6() {
+        final int amount = 160;
+        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
     }
 
   
