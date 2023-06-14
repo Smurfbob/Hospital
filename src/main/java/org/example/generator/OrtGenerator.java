@@ -2,6 +2,7 @@ package org.example.generator;
 
 import com.github.javafaker.Faker;
 import org.example.model.Ort;
+import org.example.utils.DatabaseUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,9 +17,7 @@ public class OrtGenerator {
 
         List<Ort> listOfOrt = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/hospital", "postgres", "postgres")
-        ) {
+        try (Connection connection = DatabaseUtils.requestDatabaseConnection()) {
             // generate 1 data entity {ort entity}
             for (int i = 1; i <= amountToGenerateData; i++) {
                 // creates new hospital each iteration
@@ -50,10 +49,7 @@ public class OrtGenerator {
     }
 
     private static String removeSymbols(String input) {
-        // Regular expression to match symbols
-        Pattern pattern = Pattern.compile("[^a-zA-Z0-9\s]");
-        // Replace symbols with an empty string
-        return pattern.matcher(input).replaceAll("");
+        return input.replaceAll("'", "");
     }
 
 }

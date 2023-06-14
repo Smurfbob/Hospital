@@ -110,10 +110,6 @@ public class KrankenhausGenerator {
     }
 
     private static String removeSymbols(String input) {
-        // Regular expression to match symbols
-        Pattern pattern = Pattern.compile("[^a-zA-Z0-9\s]");
-        System.out.println(pattern);
-        // Replace symbols with an empty string
-        return pattern.matcher(input).replaceAll("");
+        return input.replaceAll("'", "");
     }
 }

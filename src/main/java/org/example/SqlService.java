@@ -103,9 +103,9 @@ public class SqlService {
     private static void insertTestData(String tablename, String columns, String values) {
         String sqlDeleteQuery = String.format("DELETE FROM %s", tablename);
 
-        try (Statement statement = _connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlDeleteQuery);) {
-
+        try {
+            Statement statement = _connection.createStatement();
+            statement.executeQuery(sqlDeleteQuery);
         } catch (SQLException exception){
             exception.printStackTrace();
         }

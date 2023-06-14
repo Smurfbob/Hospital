@@ -11,10 +11,8 @@ public class FachrichtungGenerator {
     private static int ID_COUNTER = 0;
 
     public static List<Fachrichtung> getAmountOfRandomFachrichtung(final int amount) {
-        return DatabaseUtils.genAmountOf(amount, () -> {
-           final Faker faker = new Faker();
-           return new Fachrichtung(++ID_COUNTER, faker.name().title());
-        });
+        final Faker faker = new Faker();
+        return DatabaseUtils.genAmountOf(amount, () -> new Fachrichtung(++ID_COUNTER, faker.name().title()));
     }
 
 }

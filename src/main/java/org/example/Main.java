@@ -3,17 +3,14 @@ package org.example;
 import org.example.generator.*;
 import org.example.model.*;
 import org.example.service.HospitalService;
+import org.example.utils.DatabaseUtils;
 
 import java.sql.*;
 import java.util.List;
 
 public class Main {
     public static void main (String[] args) {
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://127.0.0.1:" + System.getenv("port") + "/hospital",
-                "postgres", System.getenv("password"))) {
-
-            new HospitalService(conn);
+        try (Connection conn = DatabaseUtils.requestDatabaseConnection()) {
             if (conn != null) {
                 System.out.println("Connected to the database!");
                 SqlService sqlservice = new SqlService(conn);
