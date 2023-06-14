@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.generator.FachrichtungGenerator;
+import org.example.generator.KrankenhausGenerator;
+import org.example.model.Fachrichtung;
+import org.example.model.Krankenhaus;
 import org.example.model.Ort;
 import org.example.service.HospitalService;
 
@@ -17,11 +21,11 @@ public class Main {
                 System.out.println("Connected to the database!");
                 SqlService sqlservice = new SqlService(conn);
 
-                Ort place = new Ort(12345, "bla", "blubb");
-                Ort place1 = new Ort(12346, "bla", "blubb");
-                Ort place2 = new Ort(12347, "bla", "blubb");
-                List<Ort> placeList = List.of(place, place1, place2);
-                sqlservice.generateDataStringForTableOrt(placeList);
+//                List<Krankenhaus> hospitalList = KrankenhausGenerator.generateKrankenhausList(1000);
+//                SqlService.generateDataStringForTableKrankenhaus(hospitalList);
+
+                List<Fachrichtung> professionList = FachrichtungGenerator.getAmountOfRandomFachrichtung(10);
+                SqlService.generateDataStringForTableFachrichtung(professionList);
             } else {
                 System.out.println("Failed to make connection!");
             }
