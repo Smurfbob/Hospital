@@ -32,13 +32,12 @@ public class SqlService {
         String formattedDataForSql = "";
 
         for (int i = 0; i < locationList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \"%s\", \"%s\")",
+            formattedDataForSql += String.format("(%d, \'%s\', \'%s\')",
                     locationList.get(i).getPlz(), locationList.get(i).getName(), locationList.get(i).getRegion());
             if (i < locationList.size()-1) {
                 formattedDataForSql += ", ";
             }
         }
-
         insertTestData("ort", "plz, name, region", formattedDataForSql);
     }
 
@@ -46,7 +45,7 @@ public class SqlService {
         String formattedDataForSql = "";
 
         for (int i = 0; i < hospitalList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \"%s\", \"%s\", \"%s\", %d)",
+            formattedDataForSql += String.format("(%d, \'%s\', \'%s\', \'%s\', %d)",
                     hospitalList.get(i).getKrankehausId(), hospitalList.get(i).getName(), hospitalList.get(i).getStrasse(),
                     hospitalList.get(i).getAnsprechpartner(), hospitalList.get(i).getPlz());
             if (i < hospitalList.size()-1) {
@@ -54,14 +53,14 @@ public class SqlService {
             }
         }
 
-        insertTestData("hospital", "krankenhaus_id, name, strasse, ansprechpartner, plz", formattedDataForSql);
+        insertTestData("krankenhaus", "krankenhaus_id, name, strasse, ansprechpartner, plz", formattedDataForSql);
     }
 
     public static void generateDataStringForTableFachrichtung(List<Fachrichtung> professionList) {
         String formattedDataForSql = "";
 
         for (int i = 0; i < professionList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \"%s\")",
+            formattedDataForSql += String.format("(%d, \'%s\')",
                     professionList.get(i).getFachrichtungs_id(), professionList.get(i).getName());
             if (i < professionList.size()-1) {
                 formattedDataForSql += ", ";
@@ -75,7 +74,7 @@ public class SqlService {
         String formattedDataForSql = "";
 
         for (int i = 0; i < stationList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \"%s\", %d, %d, %d)",
+            formattedDataForSql += String.format("(%d, \'%s\', %d, %d, %d)",
                     stationList.get(i).getStationId(), stationList.get(i).getName(), stationList.get(i).getAnzahlFreieBetten(),
                     stationList.get(i).getAnzahlBelegteBetten(), stationList.get(i).getKrankenhausId());
             if (i < stationList.size()-1) {
@@ -102,14 +101,23 @@ public class SqlService {
     }
 
     private static void insertTestData(String tablename, String columns, String values) {
-        String sqlQuery = String.format("INSERT INTO %s (%s)%n VALUES %s%n;",
+        String sqlDeleteQuery = String.format("DELETE FROM %s", tablename);
+
+        try (Statement statement = _connection.createStatement();
+             ResultSet rs = statement.executeQuery(sqlDeleteQuery);) {
+
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+
+        String sqlInsertQuery = String.format("INSERT INTO %s (%s)%n VALUES %s%n;",
                 //Variablen für SQL-Query
                 tablename, columns, values);
 
-        System.out.println(sqlQuery);
+        System.out.println(sqlInsertQuery);
 
         try (Statement statement = _connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlQuery);) {
+             ResultSet rs = statement.executeQuery(sqlInsertQuery);) {
 
         } catch (SQLException exception){
             exception.printStackTrace();

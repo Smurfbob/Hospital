@@ -1,11 +1,11 @@
 package org.example.model;
 
 public class Ort {
-    private long plz;
+    private int plz;
     private String name;
     private String region;
 
-    public Ort (long PLZ, String name, String region) {
+    public Ort (int PLZ, String name, String region) {
         this.plz = PLZ;
         this.name = name;
         this.region = region;
@@ -29,7 +29,7 @@ public class Ort {
         return plz;
     }
 
-    public Ort setPlz (long plz) {
+    public Ort setPlz (int plz) {
         this.plz = plz;
         return this;
     }

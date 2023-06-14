@@ -18,7 +18,7 @@ public class Main {
                 System.out.println("Connected to the database!");
                 SqlService sqlservice = new SqlService(conn);
 
-                List<Ort> locationList = OrtGenerator.generateData(500);
+                List<Ort> locationList = OrtGenerator.generateData(100);
                 List<Fachrichtung> professionList = FachrichtungGenerator.getAmountOfRandomFachrichtung(30);
 
                 SqlService.generateDataStringForTableOrt(locationList);

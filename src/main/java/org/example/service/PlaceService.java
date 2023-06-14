@@ -23,7 +23,7 @@ public class PlaceService implements DataAccess<Ort> {
             try {
                 final String name = set.getString("name");
                 final String region = set.getString("region");
-                final long plz = set.getLong("plz");
+                final int plz = set.getInt("plz");
                 return new Ort(plz, name, region );
             } catch (SQLException e) {
                 throw new RuntimeException(e);

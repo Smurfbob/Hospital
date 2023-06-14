@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class OrtGenerator {
     public static List<Ort> generateData(int amountToGenerateData) {
@@ -25,17 +26,21 @@ public class OrtGenerator {
 
                 // creates fake data
                 // Einschränkung der PLZ-Nummern
-                int plz = faker.number().numberBetween(44100, 44200);
-                String name = faker.address().city();
-                String region = faker.address().state();
+                int plz = faker.number().numberBetween(40000, 50000);
+                String name = removeSymbols(faker.address().city());
+                String region = removeSymbols(faker.address().state());
 
                 // sets created fake data into the new ort instance
-                ort.setPlz(plz);
-                ort.setName(name);
-                ort.setRegion(region);
+                if (!listOfOrt.stream().map(Ort::getPlz).filter(currentplz -> currentplz == plz).findFirst().isPresent()) {
+                    ort.setPlz(plz);
+                    ort.setName(name);
+                    ort.setRegion(region);
 
-                // adds a new ort to the list each iteration
-                listOfOrt.add(ort);
+                    // adds a new ort to the list each iteration
+                    listOfOrt.add(ort);
+                } else {
+                    i--;
+                }
             }
 
         } catch (SQLException e) {
@@ -43,4 +48,12 @@ public class OrtGenerator {
         }
         return listOfOrt;
     }
+
+    private static String removeSymbols(String input) {
+        // Regular expression to match symbols
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9\s]");
+        // Replace symbols with an empty string
+        return pattern.matcher(input).replaceAll("");
+    }
+
 }
