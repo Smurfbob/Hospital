@@ -15,7 +15,7 @@ public class KrankenhausTest {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy:MM:DD-hh:mm:ss");
 
-    private void request(final int amount, final String name) {
+    private void request(final int amount) {
 
         final LocalDateTime start = LocalDateTime.now();
 
@@ -26,7 +26,7 @@ public class KrankenhausTest {
 
         final Duration duration = Duration.between(start, endTime);
 
-        final String response = String.format("%s * %d %s %s --- %s Time: %d", name, DEFAULT_INTERVAL ,KrankenhausTest.class.getSimpleName(),
+        final String response = String.format("Requests: %d || %s %s --- %s Time: %d", amount ,KrankenhausTest.class.getSimpleName(),
                 start.format(FORMATTER),
                 endTime.format(FORMATTER),
                 duration.getSeconds());
@@ -36,43 +36,43 @@ public class KrankenhausTest {
     @Test
     public void test0() {
         final int amount = 1;
-        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+        request(DEFAULT_INTERVAL * amount);
     }
 
     @Test
     public void test1() {
         final int amount = 5;
-        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+        request(DEFAULT_INTERVAL * amount);
     }
 
     @Test
     public void test2() {
         final int amount = 10;
-        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+        request(DEFAULT_INTERVAL * amount);
     }
 
     @Test
     public void test3() {
         final int amount = 20;
-        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+        request(DEFAULT_INTERVAL * amount);
     }
 
     @Test
     public void test4() {
         final int amount = 40;
-        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+        request(DEFAULT_INTERVAL * amount);
     }
 
     @Test
     public void test5() {
         final int amount = 80;
-        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+        request(DEFAULT_INTERVAL * amount);
     }
 
     @Test
     public void test6() {
         final int amount = 160;
-        request(DEFAULT_INTERVAL * amount, String.format("Test %d", amount));
+        request(DEFAULT_INTERVAL * amount);
     }
 
   
