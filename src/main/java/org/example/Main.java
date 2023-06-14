@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.service.HospitalService;
+import org.example.service.KrankenhausService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,10 +13,12 @@ public class Main {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:" + System.getenv("port") + "/hospital", "postgres", System.getenv("password"))) {
 
-            new HospitalService(conn);
             if (conn != null) {
                 System.out.println("Connected to the database!");
-                createTables(conn);
+
+                new KrankenhausService(conn).getAllKrankenhausEntries();
+
+
             } else {
                 System.out.println("Failed to make connection!");
             }
