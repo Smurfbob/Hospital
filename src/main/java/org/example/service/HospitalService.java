@@ -25,8 +25,6 @@ public class HospitalService implements DataAccess<Hospital> {
             Statement statement = this.connection.createStatement();
             statement.execute("SELECT * FROM krankenhaus;");
             ResultSet set = statement.getResultSet();
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
