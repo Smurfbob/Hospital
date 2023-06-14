@@ -1,6 +1,7 @@
 package org.example;
 
 import com.github.javafaker.Faker;
+import org.example.service.DatabaseUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,8 +14,7 @@ import java.util.List;
 public class RandomDataGenerator {
     public static void main(String[] args) {
         Faker faker = new Faker();
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/hospital", "postgres", "postgres")) {
+        try (Connection connection = DatabaseUtils.requestDatabaseConnection()) {
 
             // Retrieve existing postal codes from the "plz" table
             List<Integer> postalCodes = getExistingPostalCodes(connection);
@@ -24,7 +24,7 @@ public class RandomDataGenerator {
 
             PreparedStatement statement = connection.prepareStatement(insertQuery);
 
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 8; i++) {
                 int hospitalId = faker.number().numberBetween(1, 10000);
                 String name = faker.name().fullName();
                 String street = faker.address().streetAddress();
