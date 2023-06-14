@@ -11,23 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomDataGenerator {
-    public static void main(String[] args) {
-
-        for (Krankenhaus krankenhaus : generateData(5)) {
-            System.out.println(krankenhaus.getKrankenHausId());
-            System.out.println(krankenhaus.getName());
-            System.out.println(krankenhaus.getStrasse());
-            System.out.println(krankenhaus.getAnsprechpartner());
-            System.out.println(krankenhaus.getPlz());
-
-            System.out.println("==============================");
-        }
-    }
-
-    private static List<Krankenhaus> generateData(int amountToGenerateData) {
+public class KrankenhausGenerator {
+    public static List<Krankenhaus> generatedKrankenhausDataList(int amountToGenerateData) {
         Faker faker = new Faker();
-
         List<Krankenhaus> listOfKrankenhaus = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(
@@ -35,7 +21,6 @@ public class RandomDataGenerator {
         ) {
             // Retrieve existing postal codes from the "plz" table
             List<Integer> postalCodes = getExistingPostalCodes(connection);
-
 
             // generate 1 data entity {hospital entity}
             for (int i = 1; i <= amountToGenerateData; i++) {
