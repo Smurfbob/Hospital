@@ -2,11 +2,16 @@ package org.example.model;
 
 public class Fachrichtung {
 
+    private static final String TABLE_NAME = "fachrichtung";
+
     private int fachrichtungs_id;
     private String name;
 
     public Fachrichtung () {
 
+    }
+    public String getSqlInsertStatement() {
+        return String.format("INSERT INTO %s (fachrichtungs_id, \"name\") VALUES (%s, %s)", this.fachrichtungs_id, this.name);
     }
 
     @Override
