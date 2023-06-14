@@ -1,16 +1,13 @@
 package org.example.generator;
 
-import com.github.javafaker.Faker;
 import org.example.model.Fachrichtung;
 import org.example.model.FachrichtungsStation;
 import org.example.model.Station;
-import org.example.utils.DatabaseUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 public class FachrichtungStationGenerator {
 

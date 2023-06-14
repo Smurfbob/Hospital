@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class StationGenerator {
 
@@ -19,25 +17,18 @@ public class StationGenerator {
         return ThreadLocalRandom.current().nextInt(20);
     }
 
-    public static List<Station> getAmountOfRandomStationFachrichtung(final Collection<Krankenhaus> hauser, final int stationAmountForHospital) {
+    public static List<Station> getAmountOfRandomStationFachrichtung(final Collection<Krankenhaus> hospitals, final int stationAmountForHospital) {
         final Faker faker = new Faker();
         final List<Station> stations = new ArrayList<>();
-        for(Krankenhaus krankenhaus : hauser) {
+        for(Krankenhaus hospital : hospitals) {
             for(int i=0 ; i < stationAmountForHospital ; i++) {
-                Station station = new Station(++ID_COUNTER, removeSymbols(faker.name().fullName()), r(), r(), krankenhaus.getPlz());
+                Station station = new Station(++ID_COUNTER, String.format("Station %d", i), r(), r(), hospital.getKrankehausId());
                 stations.add(station);
             }
         }
         return stations;
     }
 
-    private static String removeSymbols(String input) {
-        // Regular expression to match symbols
-        // Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\s']");
-        // Replace symbols with an empty string
-        // return pattern.matcher(input).replaceAll("");
 
-        return input.replaceAll("'","");
-    }
 
 }

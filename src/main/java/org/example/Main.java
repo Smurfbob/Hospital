@@ -17,9 +17,11 @@ public class Main {
             if (conn != null) {
                 System.out.println("Connected to the database!");
                 SqlService sqlservice = new SqlService(conn);
+                SqlService.createTables();
+                SqlService.deleteAllTableValues();
 
                 List<Ort> locationList = OrtGenerator.generateData(100);
-                List<Fachrichtung> professionList = FachrichtungGenerator.getAmountOfRandomFachrichtung(30);
+                List<Fachrichtung> professionList = FachrichtungGenerator.create30FachrichtungenListe();
 
                 SqlService.generateDataStringForTableOrt(locationList);
                 SqlService.generateDataStringForTableFachrichtung(professionList);

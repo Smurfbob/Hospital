@@ -20,9 +20,21 @@ public class SqlService {
 
     public static void createTables() {
         String sqlCreationScript = readStringFrom("createTablesHospitalDb.sql");
-        try (Statement statement = _connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlCreationScript)) {
 
+        try {
+            Statement statement = _connection.createStatement();
+            ResultSet rs = statement.executeQuery(sqlCreationScript);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void deleteAllTableValues() {
+        String sqlDeletionScript = readStringFrom("deleteTablesHospitalDb.sql");
+
+        try {
+            Statement statement = _connection.createStatement();
+            ResultSet rs = statement.executeQuery(sqlDeletionScript);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -101,24 +113,15 @@ public class SqlService {
     }
 
     private static void insertTestData(String tablename, String columns, String values) {
-        String sqlDeleteQuery = String.format("DELETE FROM %s", tablename);
-
-        try (Statement statement = _connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlDeleteQuery);) {
-
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
         String sqlInsertQuery = String.format("INSERT INTO %s (%s)%n VALUES %s%n;",
                 //Variablen für SQL-Query
                 tablename, columns, values);
 
         System.out.println(sqlInsertQuery);
 
-        try (Statement statement = _connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlInsertQuery);) {
-
+        try {
+            Statement statement = _connection.createStatement();
+            ResultSet rs = statement.executeQuery(sqlInsertQuery);
         } catch (SQLException exception){
             exception.printStackTrace();
         }

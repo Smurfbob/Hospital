@@ -32,7 +32,7 @@ public class Krankenhaus {
                 '}';
     }
 
-    public long getKrankehausId () {
+    public int getKrankehausId () {
         return krankehausId;
     }
 
