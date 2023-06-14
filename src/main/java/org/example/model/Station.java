@@ -57,6 +57,8 @@ public class Station {
         return this;
     }
 
+
+
     public int getAnzahlBelegteBetten () {
         return anzahlBelegteBetten;
     }
