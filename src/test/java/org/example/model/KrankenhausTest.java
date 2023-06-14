@@ -6,14 +6,13 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class KrankenhausTest {
 
 
     private static final int DEFAULT_INTERVAL = 5000;
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy:MM:DD-hh:mm:ss");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy:MM:dd-hh:mm:ss");
 
     private void request(final int amount) {
 

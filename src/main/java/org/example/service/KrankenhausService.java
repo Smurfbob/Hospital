@@ -11,7 +11,7 @@ import java.util.List;
 
 public class KrankenhausService {
 
-    private Connection connection;
+    private final Connection connection;
 
     public KrankenhausService(Connection connection) {
         this.connection = connection;
@@ -22,10 +22,7 @@ public class KrankenhausService {
         try {
             Statement statement = this.connection.createStatement();
             ResultSet databaseResult = statement.executeQuery("SELECT * FROM krankenhaus;");
-
-            List<Krankenhaus> listOfKrankenhaus = getKrankenhausList(databaseResult);
-
-            return listOfKrankenhaus;
+            return getKrankenhausList(databaseResult);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

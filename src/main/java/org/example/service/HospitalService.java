@@ -12,7 +12,7 @@ import java.util.List;
 
 public class HospitalService implements DataAccess<Krankenhaus> {
 
-    private Connection connection;
+    private final Connection connection;
 
     public HospitalService (Connection connection) {
         this.connection = connection;

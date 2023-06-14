@@ -2,9 +2,9 @@ package org.example.generator;
 
 import com.github.javafaker.Faker;
 import org.example.model.Krankenhaus;
+import org.example.utils.DatabaseUtils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,9 +16,7 @@ public class KrankenhausGenerator {
 
         List<Krankenhaus> listOfKrankenhaus = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/hospital", "postgres", "postgres")
-        ) {
+        try (Connection connection = DatabaseUtils.requestDatabaseConnection()) {
             // Retrieve existing postal codes from the "plz" table
             List<Integer> postalCodes = getExistingPostalCodes(connection);
 
@@ -28,14 +26,13 @@ public class KrankenhausGenerator {
                 Krankenhaus krankenhaus = new Krankenhaus();
 
                 // creates fake data
-                int krankenhaus_id = i;
                 String name = String.format("Krankenhaus %d", i);
                 String strasse = String.format("Strasse %d", i);
                 String ansprechpartner = String.format("Ansprechpartner %d", i);
                 int postalCode = getRandomPostalCode(postalCodes);
 
                 // sets created fake data into the new hospital instance
-                krankenhaus.setKrankehausId(krankenhaus_id);
+                krankenhaus.setKrankehausId(i);
                 krankenhaus.setName(name);
                 krankenhaus.setStrasse(strasse);
                 krankenhaus.setAnsprechpartner(ansprechpartner);
@@ -68,11 +65,11 @@ public class KrankenhausGenerator {
         return postalCodes.get(randomIndex);
     }
 
-    // ignore this && dont delete this
+    // ignore this && don't delete this
     private static void test(int amountToGenerateData) {
+
         Faker faker = new Faker();
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/hospital", "postgres", "postgres")) {
+        try (Connection connection = DatabaseUtils.requestDatabaseConnection()) {
 
             // Retrieve existing postal codes from the "plz" table
             List<Integer> postalCodes = getExistingPostalCodes(connection);

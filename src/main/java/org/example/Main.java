@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.generator.*;
 import org.example.model.*;
-import org.example.service.HospitalService;
 import org.example.utils.DatabaseUtils;
 
 import java.sql.*;
@@ -13,7 +12,6 @@ public class Main {
         try (Connection conn = DatabaseUtils.requestDatabaseConnection()) {
             if (conn != null) {
                 System.out.println("Connected to the database!");
-                SqlService sqlservice = new SqlService(conn);
                 SqlService.createTables();
                 SqlService.deleteAllTableValues();
 

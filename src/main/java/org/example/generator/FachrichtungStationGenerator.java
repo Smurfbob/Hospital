@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class FachrichtungStationGenerator {
 
-    private static int ID_COUNTER = 0;
+    private static final int ID_COUNTER = 0;
 
     private static <T>  T getRandom(final Collection<T> list) {
         return new ArrayList<>(list).get(ThreadLocalRandom.current().nextInt(list.size()));
