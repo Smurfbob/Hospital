@@ -2,6 +2,7 @@ package org.example.model;
 
 public class Krankenhaus {
 
+
     private int krankehausId;
     private String name;
     private String strasse;
