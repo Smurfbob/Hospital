@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.model.Profession;
+import org.example.model.Fachrichtung;
 import org.example.template.DataAccess;
 
 import java.sql.Connection;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
-public class ProfessionService implements DataAccess<Profession> {
+public class ProfessionService implements DataAccess<Fachrichtung> {
 
     private static final String TABLE_NAME = "fachrichtung";
     private final Connection connection;
@@ -18,10 +18,10 @@ public class ProfessionService implements DataAccess<Profession> {
     }
 
     @Override
-    public List<Profession> getAll() {
+    public List<Fachrichtung> getAll() {
         return DatabaseUtils.fetchAllElements(TABLE_NAME, this.connection, resultSet -> {
             try {
-                return new Profession(resultSet.getInt("fachrichtungs_id"), resultSet.getString("name"));
+                return new Fachrichtung(resultSet.getInt("fachrichtungs_id"), resultSet.getString("name"));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

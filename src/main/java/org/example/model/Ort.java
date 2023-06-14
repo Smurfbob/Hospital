@@ -1,12 +1,12 @@
 package org.example.model;
 
-public class Place {
-    private long PLZ;
+public class Ort {
+    private long plz;
     private String name;
     private String region;
 
-    public Place (long PLZ, String name, String region) {
-        this.PLZ = PLZ;
+    public Ort (long PLZ, String name, String region) {
+        this.plz = PLZ;
         this.name = name;
         this.region = region;
     }
@@ -15,22 +15,22 @@ public class Place {
     @Override
     public String toString () {
         return "Place{" +
-                "PLZ=" + PLZ +
+                "PLZ=" + plz +
                 ", name='" + name + '\'' +
                 ", region='" + region + '\'' +
                 '}';
     }
 
-    public Place() {
+    public Ort () {
 
     }
 
-    public long getPLZ () {
-        return PLZ;
+    public long getPlz () {
+        return plz;
     }
 
-    public Place setPLZ (long PLZ) {
-        this.PLZ = PLZ;
+    public Ort setPlz (long plz) {
+        this.plz = plz;
         return this;
     }
 
@@ -38,7 +38,7 @@ public class Place {
         return name;
     }
 
-    public Place setName (String name) {
+    public Ort setName (String name) {
         this.name = name;
         return this;
     }
@@ -47,7 +47,7 @@ public class Place {
         return region;
     }
 
-    public Place setRegion (String region) {
+    public Ort setRegion (String region) {
         this.region = region;
         return this;
     }

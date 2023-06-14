@@ -2,10 +2,10 @@ package org.example.model;
 
 public class Station {
 
-    private int stationID;
-    private int availableBeds;
-    private int unavailableBeds;
-    private int kkhID;
+    private int stationId;
+    private int anzahlFreieBetten;
+    private int anzahlBelegteBetten;
+    private int krankenhausId;
 
     public Station() {
 
@@ -14,53 +14,53 @@ public class Station {
     @Override
     public String toString() {
         return "Station{" +
-                "stationID=" + stationID +
-                ", availableBeds=" + availableBeds +
-                ", unavailableBeds=" + unavailableBeds +
-                ", kkhID=" + kkhID +
+                "stationID=" + stationId +
+                ", availableBeds=" + anzahlFreieBetten +
+                ", unavailableBeds=" + anzahlBelegteBetten +
+                ", kkhID=" + krankenhausId +
                 '}';
     }
 
     public Station(int stationID, int availableBeds, int unavailableBeds, int kkhID) {
-        this.stationID = stationID;
-        this.availableBeds = availableBeds;
-        this.unavailableBeds = unavailableBeds;
-        this.kkhID = kkhID;
+        this.stationId = stationID;
+        this.anzahlFreieBetten = availableBeds;
+        this.anzahlBelegteBetten = unavailableBeds;
+        this.krankenhausId = kkhID;
     }
 
-    public int getStationID() {
-        return stationID;
+    public int getStationId () {
+        return stationId;
     }
 
-    public Station setStationID(int stationID) {
-        this.stationID = stationID;
+    public Station setStationId (int stationId) {
+        this.stationId = stationId;
         return this;
     }
 
-    public int getAvailableBeds() {
-        return availableBeds;
+    public int getAnzahlFreieBetten () {
+        return anzahlFreieBetten;
     }
 
-    public Station setAvailableBeds(int availableBeds) {
-        this.availableBeds = availableBeds;
+    public Station setAnzahlFreieBetten (int anzahlFreieBetten) {
+        this.anzahlFreieBetten = anzahlFreieBetten;
         return this;
     }
 
-    public int getUnavailableBeds() {
-        return unavailableBeds;
+    public int getAnzahlBelegteBetten () {
+        return anzahlBelegteBetten;
     }
 
-    public Station setUnavailableBeds(int unavailableBeds) {
-        this.unavailableBeds = unavailableBeds;
+    public Station setAnzahlBelegteBetten (int anzahlBelegteBetten) {
+        this.anzahlBelegteBetten = anzahlBelegteBetten;
         return this;
     }
 
-    public int getKkhID() {
-        return kkhID;
+    public int getKrankenhausId () {
+        return krankenhausId;
     }
 
-    public Station setKkhID(int kkhID) {
-        this.kkhID = kkhID;
+    public Station setKrankenhausId (int krankenhausId) {
+        this.krankenhausId = krankenhausId;
         return this;
     }
 }
