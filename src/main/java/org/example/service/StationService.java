@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.model.Station;
 import org.example.template.DataAccess;
+import org.example.utils.DatabaseUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ public class StationService implements DataAccess<Station> {
 
     @Override
     public List<Station> getAll() {
-        return DatabaseUtils.fetchAllElements(TABLE_NAME, this.connection,  resultSet -> {
+        return DatabaseUtils.fetchAllElements(TABLE_NAME, this.connection, resultSet -> {
 
             try {
                 final int stationID = resultSet.getInt("stations_id");

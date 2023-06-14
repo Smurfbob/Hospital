@@ -1,5 +1,7 @@
 package org.example.service;
 
+import org.example.utils.DatabaseUtils;
+
 import java.sql.Connection;
 
 public class ServiceProvider {

@@ -5,6 +5,7 @@ public class FachrichtungsStation {
     private int fachrichtungsId;
     private int stationsId;
 
+
     public FachrichtungsStation () {
 
     }

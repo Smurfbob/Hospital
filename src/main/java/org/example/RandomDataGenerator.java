@@ -1,10 +1,9 @@
 package org.example;
 
 import com.github.javafaker.Faker;
-import org.example.service.DatabaseUtils;
+import org.example.utils.DatabaseUtils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
