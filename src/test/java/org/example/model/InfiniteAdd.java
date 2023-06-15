@@ -3,6 +3,7 @@ package org.example.model;
 import org.example.service.PlaceService;
 import org.example.service.ServiceProvider;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -17,26 +18,30 @@ public class InfiniteAdd {
         this.placeService.deleteAll();
     }
 
+    @Test
     public void oneSecond () {
         this.testForDuration(Duration.ofSeconds(1));
     }
-
+    @Test
     public void tenSeconds () {
         this.testForDuration(Duration.ofSeconds(10));
     }
 
-
+    @Test
     public void thirtySeconds () {
         this.testForDuration(Duration.ofSeconds(30));
     }
-
+    @Test
     public void oneMinute () {
         this.testForDuration(Duration.ofMinutes(1));
     }
+
+    @Test
     public void twoMinutes() {
         this.testForDuration(Duration.ofMinutes(2));
     }
 
+    @Test
     public void fiveMinutes() {
         this.testForDuration(Duration.ofMinutes(2));
     }
