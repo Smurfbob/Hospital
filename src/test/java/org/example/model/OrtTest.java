@@ -33,11 +33,15 @@ public class OrtTest {
 
 
     private void fillWithData(int amount) {
+        final TestLogger logger = new TestLogger(String.format("Fill by %d", amount));
+        logger.addLog(String.format("Start to fill with %d", amount));
         amount *= DEFAULT_FILL;
         for(int i=0 ; i < amount ; i++) {
             this.placeService.addNewPlace(new Ort(i+1, String.format("Name: %d", i+1),
                     String.format("Region: %d", i)));
         }
+        logger.addLog(String.format("Finished writing %d", amount));
+        logger.writeToFile();
     }
 
 

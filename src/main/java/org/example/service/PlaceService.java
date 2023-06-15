@@ -20,6 +20,21 @@ public class PlaceService implements DataAccess<Ort> {
         this.connection = connection;
     }
 
+
+    public long getOrtAmount() {
+        final String sql = "SELECT COUNT(plz) FROM ort;";
+        try {
+            final Statement statement = this.connection.createStatement();
+            statement.execute(sql);
+            final ResultSet resultSet = statement.getResultSet();
+            if(resultSet.next())
+                return resultSet.getInt("count");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return -1;
+    }
+
     @Override
     public List<Ort> getAll () {
         return DatabaseUtils.fetchAllElements(TABLE_NAME, connection, set -> {
