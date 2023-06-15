@@ -34,6 +34,44 @@ public class PlaceService implements DataAccess<Ort> {
         });
     }
 
+    public void deleteAll() {
+        final String sqlStatement = "DELETE FROM ort;";
+        try {
+            final Statement statement = this.connection.createStatement();
+            statement.execute(sqlStatement);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void addNewPlace(final Ort ort) {
+        final String sqlStatement = String.format("INSERT INTO ort (plz, \"name\", region) VALUES (%d, '%s', '%s');", ort.getPlz(), ort.getName(), ort.getRegion());
+        try {
+            final Statement statement = this.connection.createStatement();
+            statement.execute(sqlStatement);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Ort getOrtByPlz(final int plz) {
+        try {
+            final Statement statement = this.connection.createStatement();
+            statement.execute(String.format("SELECT * FROM ort WHERE plz = %d;"), plz);
+            final ResultSet resultSet = statement.getResultSet();
+            if(resultSet.next())
+                return new Ort(plz, resultSet.getString("name"), resultSet.getString("region"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public List<Ort> getHigherPlz(final int plz) {
+        return getByPlzDistance(plz, '>');
+    }
+
 
 
     public void getSortedData(String ascType) throws SQLException {
@@ -56,6 +94,27 @@ public class PlaceService implements DataAccess<Ort> {
             System.out.println(ort.getRegion());
         }
 
+    }
+
+
+    public List<Ort> getSmallerPlz(final int plz) {
+        return getByPlzDistance(plz, '<');
+    }
+
+    private List<Ort> getByPlzDistance (final int plz, final char operation) {
+        final List<Ort> places = new ArrayList<>();
+        try {
+            final Statement statement = this.connection.createStatement();
+            statement.execute(String.format("SELECT * FROM ort WHERE plz %s %d;",operation, plz));
+            final ResultSet resultSet = statement.getResultSet();
+            while (resultSet.next()) {
+                places.add(new Ort(resultSet.getInt("plz"),
+                        resultSet.getString("name"), resultSet.getString("region")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return places;
     }
 
 }
