@@ -5,7 +5,10 @@ import org.example.template.DataAccess;
 import org.example.utils.DatabaseUtils;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceService implements DataAccess<Ort> {
@@ -30,4 +33,29 @@ public class PlaceService implements DataAccess<Ort> {
             }
         });
     }
+
+
+
+    public void getSortedData(String ascType) throws SQLException {
+        Statement statement = this.connection.createStatement();
+        ResultSet databaseResult = statement.executeQuery("SELECT * FROM ort" +
+                "ORDER BY plz" + ascType + ";" );
+
+        List<Ort> listOfOrt = new ArrayList<>();
+        while (databaseResult.next()){
+            listOfOrt.add(
+                    new Ort(databaseResult.getInt("plz"),
+                    databaseResult.getString(2),
+                    databaseResult.getString(3))
+            );
+        }
+
+        for (Ort ort : listOfOrt) {
+            System.out.println(ort.getPlz());
+            System.out.println(ort.getName());
+            System.out.println(ort.getRegion());
+        }
+
+    }
+
 }

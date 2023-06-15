@@ -27,7 +27,7 @@ public class KrankenhausService implements DataAccess<Krankenhaus> {
     private List<Krankenhaus> getAllKrankenhausEntries() {
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet databaseResult = statement.executeQuery("SELECT * FROM krankenhaus;");
+            ResultSet databaseResult = statement.executeQuery("SELECT plz FROM krankenhaus;");
             return getKrankenhausList(databaseResult);
         } catch (SQLException e) {
             throw new RuntimeException(e);
