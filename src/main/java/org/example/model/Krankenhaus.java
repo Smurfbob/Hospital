@@ -2,6 +2,7 @@ package org.example.model;
 
 public class Krankenhaus {
 
+
     private int krankehausId;
     private String name;
     private String strasse;
@@ -32,7 +33,7 @@ public class Krankenhaus {
                 '}';
     }
 
-    public long getKrankehausId () {
+    public int getKrankehausId () {
         return krankehausId;
     }
 
@@ -42,40 +43,35 @@ public class Krankenhaus {
         return name;
     }
 
-    public Krankenhaus setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public String getStrasse () {
         return strasse;
     }
 
-    public Krankenhaus setStrasse (String strasse) {
+    public void setStrasse (String strasse) {
         this.strasse = strasse;
-        return this;
     }
 
     public String getAnsprechpartner () {
         return ansprechpartner;
     }
 
-    public Krankenhaus setAnsprechpartner (String ansprechpartner) {
+    public void setAnsprechpartner (String ansprechpartner) {
         this.ansprechpartner = ansprechpartner;
-        return this;
     }
 
-    public Krankenhaus setKrankehausId (int krankehausId) {
+    public void setKrankehausId (int krankehausId) {
         this.krankehausId = krankehausId;
-        return this;
     }
 
     public int getPlz () {
         return plz;
     }
 
-    public Krankenhaus setPlz (int plz) {
+    public void setPlz (int plz) {
         this.plz = plz;
-        return this;
     }
 }

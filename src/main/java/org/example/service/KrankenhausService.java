@@ -9,23 +9,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KrankenhausService {
+public class KrankenhausService implements DataAccess<Krankenhaus> {
 
-    private Connection connection;
+    private final Connection connection;
 
     public KrankenhausService(Connection connection) {
         this.connection = connection;
     }
 
 
-    public List<Krankenhaus> getAllKrankenhausEntries() {
+    @Override
+    public List<Krankenhaus> getAll() {
+        return this.getAllKrankenhausEntries();
+    }
+
+    private List<Krankenhaus> getAllKrankenhausEntries() {
         try {
             Statement statement = this.connection.createStatement();
             ResultSet databaseResult = statement.executeQuery("SELECT * FROM krankenhaus;");
-
-            List<Krankenhaus> listOfKrankenhaus = getKrankenhausList(databaseResult);
-
-            return listOfKrankenhaus;
+            return getKrankenhausList(databaseResult);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -33,24 +35,15 @@ public class KrankenhausService {
 
     private List<Krankenhaus> getKrankenhausList(ResultSet databaseResult) throws SQLException {
         List<Krankenhaus> listOfKrankenhaus = new ArrayList<>();
-
         while (databaseResult.next()) {
             Krankenhaus krankenhaus = new Krankenhaus();
-
             krankenhaus.setKrankehausId(databaseResult.getInt("krankenhaus_Id"));
             krankenhaus.setName(databaseResult.getString(2));
             krankenhaus.setStrasse(databaseResult.getString(3));
             krankenhaus.setAnsprechpartner(databaseResult.getString(4));
             krankenhaus.setPlz(databaseResult.getInt("plz"));
             listOfKrankenhaus.add(krankenhaus);
-
-            System.out.println(databaseResult.getInt("krankenhaus_Id"));
-            System.out.println(databaseResult.getString(2));
-            System.out.println(databaseResult.getString(3));
-            System.out.println(databaseResult.getString(4));
-            System.out.println(databaseResult.getInt("plz"));
         }
-
         databaseResult.close();
         return listOfKrankenhaus;
     }

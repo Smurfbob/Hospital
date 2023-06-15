@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.model.*;
+import org.example.utils.DatabaseUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,114 +13,116 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
 public class SqlService {
-    private static Connection _connection;
-    public SqlService(Connection connection) {
-        _connection = connection;
-    }
+
+    private static final Connection _connection = DatabaseUtils.requestDatabaseConnection();
 
     public static void createTables() {
         String sqlCreationScript = readStringFrom("createTablesHospitalDb.sql");
-        try (Statement statement = _connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlCreationScript)) {
 
+        try {
+            Statement statement = _connection.createStatement();
+            ResultSet rs = statement.executeQuery(sqlCreationScript);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void deleteAllTableValues() {
+        String sqlDeletionScript = readStringFrom("deleteTablesHospitalDb.sql");
+
+        try {
+            Statement statement = _connection.createStatement();
+            ResultSet rs = statement.executeQuery(sqlDeletionScript);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
 
     public static void generateDataStringForTableOrt(List<Ort> locationList) {
-        String formattedDataForSql = "";
+        StringBuilder formattedDataForSql = new StringBuilder();
 
         for (int i = 0; i < locationList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \'%s\', \'%s\')",
-                    locationList.get(i).getPlz(), locationList.get(i).getName(), locationList.get(i).getRegion());
-            if (i < locationList.size()-1) {
-                formattedDataForSql += ", ";
+            formattedDataForSql.append(String.format("(%d, '%s', '%s')",
+                    locationList.get(i).getPlz(), locationList.get(i).getName(), locationList.get(i).getRegion()));
+            if (i < locationList.size() - 1) {
+                formattedDataForSql.append(", ");
             }
         }
-        insertTestData("ort", "plz, name, region", formattedDataForSql);
+        insertTestData("ort", "plz, name, region", formattedDataForSql.toString());
     }
 
     public static void generateDataStringForTableKrankenhaus(List<Krankenhaus> hospitalList) {
-        String formattedDataForSql = "";
+        StringBuilder formattedDataForSql = new StringBuilder();
 
         for (int i = 0; i < hospitalList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \'%s\', \'%s\', \'%s\', %d)",
+            formattedDataForSql.append(String.format("(%d, '%s', '%s', '%s', %d)",
                     hospitalList.get(i).getKrankehausId(), hospitalList.get(i).getName(), hospitalList.get(i).getStrasse(),
-                    hospitalList.get(i).getAnsprechpartner(), hospitalList.get(i).getPlz());
-            if (i < hospitalList.size()-1) {
-                formattedDataForSql += ", ";
+                    hospitalList.get(i).getAnsprechpartner(), hospitalList.get(i).getPlz()));
+            if (i < hospitalList.size() - 1) {
+                formattedDataForSql.append(", ");
             }
         }
 
-        insertTestData("krankenhaus", "krankenhaus_id, name, strasse, ansprechpartner, plz", formattedDataForSql);
+        insertTestData("krankenhaus", "krankenhaus_id, name, strasse, ansprechpartner, plz", formattedDataForSql.toString());
     }
 
     public static void generateDataStringForTableFachrichtung(List<Fachrichtung> professionList) {
-        String formattedDataForSql = "";
+        StringBuilder formattedDataForSql = new StringBuilder();
 
         for (int i = 0; i < professionList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \'%s\')",
-                    professionList.get(i).getFachrichtungs_id(), professionList.get(i).getName());
-            if (i < professionList.size()-1) {
-                formattedDataForSql += ", ";
+            formattedDataForSql.append(String.format("(%d, '%s')",
+                    professionList.get(i).getFachrichtungs_id(), professionList.get(i).getName()));
+            if (i < professionList.size() - 1) {
+                formattedDataForSql.append(", ");
             }
         }
 
-        insertTestData("fachrichtung", "fachrichtungs_id, name", formattedDataForSql);
+        insertTestData("fachrichtung", "fachrichtungs_id, name", formattedDataForSql.toString());
     }
 
     public static void generateDataStringForTableStation(List<Station> stationList) {
-        String formattedDataForSql = "";
+        StringBuilder formattedDataForSql = new StringBuilder();
 
         for (int i = 0; i < stationList.size(); i++) {
-            formattedDataForSql += String.format("(%d, \'%s\', %d, %d, %d)",
+            formattedDataForSql.append(String.format("(%d, '%s', %d, %d, %d)",
                     stationList.get(i).getStationId(), stationList.get(i).getName(), stationList.get(i).getAnzahlFreieBetten(),
-                    stationList.get(i).getAnzahlBelegteBetten(), stationList.get(i).getKrankenhausId());
-            if (i < stationList.size()-1) {
-                formattedDataForSql += ", ";
+                    stationList.get(i).getAnzahlBelegteBetten(), stationList.get(i).getKrankenhausId()));
+            if (i < stationList.size() - 1) {
+                formattedDataForSql.append(", ");
             }
         }
 
         insertTestData("station", "stations_id, name, anzahlFreieBetten, anzahlBelegteBetten, krankenhaus_id",
-                formattedDataForSql);
+                formattedDataForSql.toString());
     }
 
     public static void generateDataStringForTableFachrichtungStation(List<FachrichtungsStation> fachrichtungsStationList) {
-        String formattedDataForSql = "";
+        StringBuilder formattedDataForSql = new StringBuilder();
 
         for (int i = 0; i < fachrichtungsStationList.size(); i++) {
-            formattedDataForSql += String.format("(%d, %d)",
-                    fachrichtungsStationList.get(i).getFachrichtungsId(), fachrichtungsStationList.get(i).getStationsId());
-            if (i < fachrichtungsStationList.size()-1) {
-                formattedDataForSql += ", ";
+            formattedDataForSql.append(String.format("(%d, %d)",
+                    fachrichtungsStationList.get(i).getFachrichtungsId(), fachrichtungsStationList.get(i).getStationsId()));
+            if (i < fachrichtungsStationList.size() - 1) {
+                formattedDataForSql.append(", ");
             }
         }
 
-        insertTestData("fachrichtungStation", "fachrichtungs_id, stations_id", formattedDataForSql);
+        insertTestData("fachrichtungStation", "fachrichtungs_id, stations_id", formattedDataForSql.toString());
     }
 
     private static void insertTestData(String tablename, String columns, String values) {
-        String sqlDeleteQuery = String.format("DELETE FROM %s", tablename);
-
-        try {
-            Statement statement = _connection.createStatement();
-            statement.executeQuery(sqlDeleteQuery);
-        } catch (SQLException exception){
-            exception.printStackTrace();
-        }
-
         String sqlInsertQuery = String.format("INSERT INTO %s (%s)%n VALUES %s%n;",
                 //Variablen für SQL-Query
                 tablename, columns, values);
 
         System.out.println(sqlInsertQuery);
 
-        try (Statement statement = _connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlInsertQuery);) {
-
-        } catch (SQLException exception){
+        try {
+            Statement statement = _connection.createStatement();
+            ResultSet rs = statement.executeQuery(sqlInsertQuery);
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }

@@ -29,26 +29,23 @@ public class Ort {
         return plz;
     }
 
-    public Ort setPlz (int plz) {
+    public void setPlz (int plz) {
         this.plz = plz;
-        return this;
     }
 
     public String getName () {
         return name;
     }
 
-    public Ort setName (String name) {
+    public void setName (String name) {
         this.name = name;
-        return this;
     }
 
     public String getRegion () {
         return region;
     }
 
-    public Ort setRegion (String region) {
+    public void setRegion (String region) {
         this.region = region;
-        return this;
     }
 }

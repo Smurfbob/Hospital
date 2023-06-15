@@ -2,26 +2,21 @@ package org.example.generator;
 
 import com.github.javafaker.Faker;
 import org.example.model.Krankenhaus;
+import org.example.utils.DatabaseUtils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class KrankenhausGenerator {
-
-    public static List<Krankenhaus> generateKrankenhausList(int amountToGenerateData) {
-        Faker faker = new Faker();
+       public static List<Krankenhaus> generateKrankenhausList(int amountToGenerateData) {
 
         List<Krankenhaus> listOfKrankenhaus = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/hospital", "postgres", "postgres")
-        ) {
+        try (Connection connection = DatabaseUtils.requestDatabaseConnection()) {
             // Retrieve existing postal codes from the "plz" table
             List<Integer> postalCodes = getExistingPostalCodes(connection);
 
@@ -31,14 +26,13 @@ public class KrankenhausGenerator {
                 Krankenhaus krankenhaus = new Krankenhaus();
 
                 // creates fake data
-                int krankenhaus_id = faker.number().numberBetween(1, 10000);
-                String name = faker.company().name();
-                String strasse = faker.address().streetAddress();
-                String ansprechpartner = faker.name().fullName();
+                String name = String.format("Krankenhaus %d", i);
+                String strasse = String.format("Strasse %d", i);
+                String ansprechpartner = String.format("Ansprechpartner %d", i);
                 int postalCode = getRandomPostalCode(postalCodes);
 
                 // sets created fake data into the new hospital instance
-                krankenhaus.setKrankehausId(krankenhaus_id);
+                krankenhaus.setKrankehausId(i);
                 krankenhaus.setName(name);
                 krankenhaus.setStrasse(strasse);
                 krankenhaus.setAnsprechpartner(ansprechpartner);
@@ -71,11 +65,11 @@ public class KrankenhausGenerator {
         return postalCodes.get(randomIndex);
     }
 
-    // ignore this && dont delete this
+    // ignore this && don't delete this
     private static void test(int amountToGenerateData) {
+
         Faker faker = new Faker();
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/hospital", "postgres", "postgres")) {
+        try (Connection connection = DatabaseUtils.requestDatabaseConnection()) {
 
             // Retrieve existing postal codes from the "plz" table
             List<Integer> postalCodes = getExistingPostalCodes(connection);
@@ -91,9 +85,9 @@ public class KrankenhausGenerator {
             for (int i = 1; i <= amountToGenerateData; i++) {
                 // creates fake data
                 int krankenhaus_id = faker.number().numberBetween(1, 10000);
-                String name = removeSymbols(faker.company().name());
-                String strasse = removeSymbols(faker.address().streetAddress());
-                String ansprechpartner = removeSymbols(faker.name().fullName());
+                String name = faker.company().name().replaceAll("[-+.^:,']","");
+                String strasse = faker.address().streetAddress().replaceAll("[-+.^:,']","");
+                String ansprechpartner = faker.name().fullName().replaceAll("[-+.^:,']","");
                 int postalCode = getRandomPostalCode(postalCodes);
 
                 statement.setInt(1, krankenhaus_id);
@@ -107,9 +101,5 @@ public class KrankenhausGenerator {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private static String removeSymbols(String input) {
-        return input.replaceAll("'", "");
     }
 }

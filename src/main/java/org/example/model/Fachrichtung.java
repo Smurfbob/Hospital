@@ -31,17 +31,15 @@ public class Fachrichtung {
         return fachrichtungs_id;
     }
 
-    public Fachrichtung setFachrichtungs_id (int fachrichtungs_id) {
+    public void setFachrichtungs_id (int fachrichtungs_id) {
         this.fachrichtungs_id = fachrichtungs_id;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public Fachrichtung setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 }
