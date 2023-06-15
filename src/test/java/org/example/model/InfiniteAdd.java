@@ -43,15 +43,14 @@ public class InfiniteAdd {
 
     @Test
     public void fiveMinutes() {
-        this.testForDuration(Duration.ofMinutes(2));
+        this.testForDuration(Duration.ofMinutes(5));
     }
 
     public void testForDuration (final Duration duration) {
-        final int minutes = 1;
-        final TestLogger logger = new TestLogger(String.format("Run for %d seconds", duration.getSeconds()));
+        final TestLogger logger = new TestLogger(String.format("Run insert for %d seconds", duration.getSeconds()));
         long plzCounter = 0;
         Instant start = Instant.now();
-        logger.addLog(String.format("Start to run for %d seconds", minutes));
+        logger.addLog(String.format("Start to run for %d seconds", duration.toMillis()));
         while (Duration.between(start, Instant.now()).toMillis() <= duration.toMillis()) {
             plzCounter++;
             final String name = String.format("Name: %d", plzCounter);
