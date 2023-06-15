@@ -21,6 +21,16 @@ public class OrtTest {
         this.fillWithData(1);
     }
 
+    @Test
+    public void insertBy5 () {
+        this.fillWithData(5);
+    }
+
+    @Test
+    public void insertBy10 () {
+        this.fillWithData(5);
+    }
+
 
     private void fillWithData(int amount) {
         amount *= DEFAULT_FILL;
